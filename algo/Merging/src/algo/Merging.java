@@ -1,5 +1,3 @@
-// code from @Zixuan Wang
-
 package algo;
 
 import java.io.BufferedReader;
