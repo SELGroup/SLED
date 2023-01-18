@@ -1,6 +1,5 @@
 import sys
-sys.path.append('/home/zengguangjie/SLED')
-sys.path.append('/home/zengguangjie/SLED/seg')
+sys.path.append('./SLED')
 
 from skimage.color import rgb2gray
 import numpy as np

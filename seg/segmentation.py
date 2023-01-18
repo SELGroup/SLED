@@ -1,8 +1,5 @@
 import sys
-sys.path.append('/home/zengguangjie/SLED')
-sys.path.append('/home/zengguangjie/SLED/seg')
-sys.path.append('E:/medi_vision/skin lesion/SLED/seg')
-sys.path.append('E:/medi_vision/skin lesion/SLED')
+sys.path.append('./SLED')
 from concurrent import futures
 from seg.ght import ght_thresh_img
 import numpy as np
@@ -25,7 +22,7 @@ from skimage.morphology import label
 def SLED_single_scale(img, mask, img_name, slic_nsegments, args):
     args.slic_nsegments = slic_nsegments
     if not jpype.isJVMStarted():
-        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/SLED/algo/merging.jar'])
+        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/SLED/algo/Merging.jar'])
     mask = mask.astype(bool).astype(int)
     seg_sp = segmentation.slic(img, mask=mask, compactness=args.slic_compatness, n_segments=args.slic_nsegments,
                                start_label=0)

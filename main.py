@@ -1,8 +1,5 @@
 import sys
-sys.path.append('/home/zengguangjie/SLED')
-sys.path.append('/home/zengguangjie/SLED/seg')
-sys.path.append('/seg')
-sys.path.append('/')
+sys.path.append('./SLED')
 
 import argparse
 import os

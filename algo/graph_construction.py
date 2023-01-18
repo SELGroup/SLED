@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
-from tqdm import tqdm
 
 # construct knn affinity matrix according to self-tuning spectral clustering,
 # restore edge between superpixels whoes centroids are near in space distance.
