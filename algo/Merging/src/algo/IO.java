@@ -60,12 +60,6 @@ public class IO {
     }
 
 
-    /**
-     *
-     * @param connection
-     * @param start
-     * @param end
-     */
     public static void putConnection(HashMap<Integer, Set<Integer>> connection, int start, int end) {
         if (!connection.containsKey(start)) {
             connection.put(start, new TreeSet<Integer>() {{
@@ -74,7 +68,6 @@ public class IO {
         } else {
             connection.get(start).add(end);
         }
-        //start end交换位置
         if (!connection.containsKey(end)) {
             connection.put(end, new TreeSet<Integer>() {{
                 add(start);
