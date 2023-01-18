@@ -1,5 +1,3 @@
-import sys
-sys.path.append('./SLED')
 from concurrent import futures
 from seg.ght import ght_thresh_img
 import numpy as np
@@ -9,12 +7,12 @@ from skimage.measure import regionprops
 from algo.graph_construction import img_knn_affinity, knn_affinity
 from algo.iterative_refinement_SE import merging, refinement_SE
 from skimage.filters import threshold_otsu
-from lesion_part_selection import lesion_selection_with_loc, background_selection_darkest
+from seg.lesion_part_selection import lesion_selection_with_loc, background_selection_darkest
 from sklearn.metrics import confusion_matrix
 import argparse
 import jpype
 import numpy.ma as ma
-from classifier import lesion_prob, max_between_variance_channel
+from seg.classifier import lesion_prob, max_between_variance_channel
 from skimage.segmentation import find_boundaries, mark_boundaries
 from skimage.morphology import label
 

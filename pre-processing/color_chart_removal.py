@@ -1,12 +1,5 @@
 # color chart removal based on paper "Histogram based circle detection"
-
-import sys
-
 import matplotlib.pyplot as plt
-
-from seg.segmentation import imshow3
-
-sys.path.append('/home/zengguangjie/skin_lesion')
 import numpy as np
 import numba as nb
 from skimage.transform import rescale, resize
@@ -16,10 +9,9 @@ import os
 from skimage.io import imread, imsave
 from skimage import segmentation, color
 from skimage.measure import regionprops
-from algo.self_tuning_graph import img_knn_affinity, self_tuning_dense_affinity, dense_affinity, self_tuning_knn_affinity
-from algo.iterative_SE import iterative_SE
-from algo.merging import merging
-# from segmentation import imshow3
+from algo.graph_construction import img_knn_affinity
+from algo.iterative_refinement_SE import refinement_SE
+from algo.iterative_refinement_SE import merging
 from concurrent import futures
 
 # contour should be the contour of a region which possibly contains a circle or a partial circle
@@ -63,17 +55,7 @@ def detect_circle(seg, mask):
     min_radius = 500
     bin_step = 20
     pad_width = max_radius
-    thresh = 0.289   # ISIC2016 training
-    # thresh = 0.302    # ISIC2016 training
-
-    # thresh = 0.2388 # for ISIC_0003056.jpg in ISIC2016 testing
-    # thresh = 0.218 # for ISIC_0008659.jpg in ISIC2016 testing
-
-    thresh = 0.27  # for "ISIC_0009298.jpg" in ISIC 2016 testing
-
-    thresh = 0.289 # for "ISIC_0001242.jpg" in ISIC 2016 testing
-
-    # thresh = 0.2
+    thresh = 0.289
 
     circle_masks = []
     for i in range(0, seg.max()+1):
@@ -95,14 +77,7 @@ def detect_circle(seg, mask):
                 big_contour = np.squeeze(contour_j)
         if max < 80000 * ds_scale*ds_scale:
             continue
-        # print(big_contour.shape)
-        # print(big_contour)
-        # plt.plot(big_contour[:, 0], big_contour[:, 1], linewidth=2)
-        # plt.show()
-        print(max)
-        print("----------------------------------------------")
         circles_i = histogram_based_circle_detection(lbl, big_contour, min_radius*ds_scale, max_radius*ds_scale, bin_step*ds_scale, thresh)
-        # print(circles_i)
         circle_mask = np.zeros_like(mask)
         for circle_i in circles_i:
             circle_i[0] /= ds_scale
@@ -128,19 +103,12 @@ def detect_circle(seg, mask):
     return mask
 
 def get_circle_mask(img_name):
-    # if not jpype.isJVMStarted():
-    #     jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/skin_lesion/PH2/skin_lesion.jar'])
-    # img_dir = "/home/zengguangjie/ISIC2016/huang_hairremoval"
-    # corner_mask_dir = "/home/zengguangjie/ISIC2016/dark_corner_artifact/masks"
-    # gt_dir = "/home/zengguangjie/ISIC2016/Training_GroundTruth"
-    # circle_dir = "/home/zengguangjie/ISIC2016/circle_color_chart"
     if not jpype.isJVMStarted():
         jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/skin_lesion/algo/skin_lesion.jar'])
-    img_dir = "/home/zengguangjie/ISIC2016_test/Test_Data"
-    resized_dir = "/home/zengguangjie/ISIC2016_test/resized"
-    corner_mask_dir = "/home/zengguangjie/ISIC2016_test/dark_corner_artifact/masks"
-    # gt_dir = "/home/zengguangjie/ISIC2016/Training_GroundTruth"
-    circle_dir = "/home/zengguangjie/ISIC2016_test/circle_color_chart"
+    img_dir = "./data/ISIC2016_test/Test_Data"
+    resized_dir = "./data/ISIC2016_test/resized"
+    corner_mask_dir = "./data/ISIC2016_test/dark_corner_artifact/masks"
+    circle_dir = "./data/ISIC2016_test/circle_color_chart"
     # for img_name in os.listdir(img_dir):
     #     if img_name != 'ISIC_0009160.jpg':
     #         continue
@@ -167,8 +135,7 @@ def get_circle_mask(img_name):
                 avgcolors[int(seg_sp[h, w])] = avgcolor_segsp[h, w, :]
     adj = img_knn_affinity(avgcolors, 30, 50, centroids, 0.3*(img.shape[0]+img.shape[1]))
     y = merging(adj, img_name)
-    z = iterative_SE(adj, y)
-    imshow3(img, seg_sp, y, z)
+    z = refinement_SE(adj, y)
     seg_iter = seg_sp.copy()
     for h in range(height):
         for w in range(width):

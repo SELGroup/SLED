@@ -1,6 +1,3 @@
-import sys
-sys.path.append('./SLED')
-
 from skimage.color import rgb2gray
 import numpy as np
 from scipy.ndimage.morphology import binary_fill_holes

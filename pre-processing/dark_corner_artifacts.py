@@ -9,14 +9,6 @@ import cv2 as cv
 from skimage import io
 
 
-# img_path = "E:\medi_vision\skin lesion\PH2\PH2Dataset\slrmsr_colorconstancy\IMD002.bmp"
-# img = io.imread(img_path)
-# gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
-# print(gray[571:572,100:200])
-#
-# plt.figure()
-# plt.imshow(gray, cmap='gray')
-# plt.show()
 
 def remove_dark_corner_PH2():
     dir_path = "E:\medi_vision\skin lesion\PH2\PH2Dataset"
