@@ -20,7 +20,7 @@ from skimage.morphology import label
 def SLED_single_scale(img, mask, img_name, slic_nsegments, args):
     args.slic_nsegments = slic_nsegments
     if not jpype.isJVMStarted():
-        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/SLED/algo/Merging.jar'])
+        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./SLED/algo/Merging.jar'])
     mask = mask.astype(bool).astype(int)
     seg_sp = segmentation.slic(img, mask=mask, compactness=args.slic_compatness, n_segments=args.slic_nsegments,
                                start_label=0)

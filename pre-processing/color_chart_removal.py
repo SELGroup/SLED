@@ -104,7 +104,7 @@ def detect_circle(seg, mask):
 
 def get_circle_mask(img_name):
     if not jpype.isJVMStarted():
-        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['/home/zengguangjie/skin_lesion/algo/skin_lesion.jar'])
+        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./algo/skin_lesion.jar'])
     img_dir = "./data/ISIC2016_test/Test_Data"
     resized_dir = "./data/ISIC2016_test/resized"
     corner_mask_dir = "./data/ISIC2016_test/dark_corner_artifact/masks"
