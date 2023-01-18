@@ -8,17 +8,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class IO {
-    /**
-     * 从指定指定获取无向图
-     * 注意文件的格式：
-     * 第一行为节点的总数
-     * 从第二行起，每一行为一个边：
-     * 例如：1 2 3.44445
-     * 中间用空格隔开
-     *
-     * @param filePath
-     * @throws Exception
-     */
     public static Graph getUndirGraphFromFile(String filePath) throws Exception {
         FileInputStream file = new FileInputStream(filePath);
         BufferedReader bf = new BufferedReader(new InputStreamReader(file));
