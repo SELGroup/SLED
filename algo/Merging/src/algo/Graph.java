@@ -11,7 +11,6 @@ public class Graph implements Serializable {
 
     private HashMap<PairNode, Double> weights;
     private HashMap<Integer, Set<Integer>> connection;
-    //此处使用数组而非HashMap的原因是：图的节点的编号连续，如从1-55555，共55555个节点
     private double[] nodeDegree;
 
 
@@ -20,7 +19,7 @@ public class Graph implements Serializable {
         int initialCap = 3 * numNodes / 4 + 1;
         this.weights = new HashMap<>(initialCap);
         this.connection = new HashMap<>(initialCap);
-        this.nodeDegree = new double[numNodes + 1]; //节点从1开始而非0
+        this.nodeDegree = new double[numNodes + 1];
     }
 
     public int getNumNodes() {
@@ -63,10 +62,7 @@ public class Graph implements Serializable {
         this.connection = connection;
     }
 
-    /**
-     * java原生的序列化和反序列化太耗时
-     * @param fileName
-     */
+
     @Deprecated
     public void write2File(String fileName) {
         try {

@@ -1,11 +1,7 @@
 package algo;
 
-
 import java.io.Serializable;
 
-/**
- * 无向图无需严格区分起点和终点
- */
 public class PairNode implements Serializable {
     private static final long serialVersionUID = 7385160833386892234L;
     private int p1;
@@ -32,11 +28,6 @@ public class PairNode implements Serializable {
         this.p2 = p2;
     }
 
-    /**
-     * 判断是否为自环
-     *
-     * @return
-     */
     public boolean isValid() {
         if (this.p1 != this.p2) {
             return true;
@@ -46,12 +37,6 @@ public class PairNode implements Serializable {
 
     }
 
-    /**
-     * 定义的哈希函数较为重要，减小哈希碰撞。
-     * 采用此哈希函数的原因是因为图像构建图时大部分节点都相邻。
-     * deIIMG-3D构建图时节点数量较小影响较小
-     * @return
-     */
     @Override
     public int hashCode() {
         int small = Math.min(p1, p2);

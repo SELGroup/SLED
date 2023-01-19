@@ -30,7 +30,6 @@ public class TwoDimSE {
         this.volumes = graph.getNodeDegree();
         this.gs = graph.getNodeDegree().clone();
         this.communities = new HashMap<>(initialCap);
-        //以下四个数据的增删是同步的
         this.cuts = graph.getWeights();
         this.connections = graph.getConnection();
         this.commDeltaHMap = new HashMap<>();
@@ -74,7 +73,6 @@ public class TwoDimSE {
         int commLeft = comms.getP1();
         int commRight = comms.getP2();
 
-        //更新新社区的度和割
         double vi = volumes[commLeft];
         double gi = gs[commLeft];
         double vj = volumes[commRight];
