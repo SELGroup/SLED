@@ -33,7 +33,8 @@ def GHT(n, x=None, nu=0, tau=0, kappa=0, omega=0.5):
   f0 = -d0 / v0 - w0 * np.log(v0) + 2 * (w0 + kappa *      omega)  * np.log(w0)
   f1 = -d1 / v1 - w1 * np.log(v1) + 2 * (w1 + kappa * (1 - omega)) * np.log(w1)
   return argmax(x, f0 + f1), f0 + f1
-#
+
+# Thresholding the multi-scale score map.
 def ght_thresh_img(img, args):
   nu, tau, kappa, omega = args.ght_nu, args.ght_tau, args.ght_kappa, args.ght_omega
   hist, hist_edges = np.histogram(img, bins=255)

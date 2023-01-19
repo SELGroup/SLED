@@ -9,7 +9,7 @@ from pyod.models.ecod import ECOD
 from pyod.models.copod import COPOD
 from pyod.models.knn import KNN
 
-# select a channel that best separate the structural entropy based segmentation result
+# Select a channel that best separate the structural entropy guided segmentation result
 def max_between_variance_channel(img, mask):
     assert img.ndim == 3
     max_variance = 0
@@ -30,6 +30,7 @@ def max_between_variance_channel(img, mask):
             max_channel = channeli
     return max_channel, max_variance
 
+# Calculate single-scale score map by outlier detection
 def lesion_prob(seg_sp, background, X, mask, args):
     score_map = np.zeros_like(seg_sp, dtype=float)
     train_indices = np.unique(seg_sp[np.logical_and(background.astype(bool), ~(seg_sp==-1))])

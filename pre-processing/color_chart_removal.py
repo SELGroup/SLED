@@ -1,4 +1,4 @@
-# color chart removal based on paper "Histogram based circle detection"
+# Color chart removal based on paper "Histogram based circle detection"
 import matplotlib.pyplot as plt
 import numpy as np
 import numba as nb
@@ -14,7 +14,7 @@ from algo.iterative_refinement_SE import refinement_SE
 from algo.iterative_refinement_SE import merging
 from concurrent import futures
 
-# contour should be the contour of a region which possibly contains a circle or a partial circle
+# Contour should be the contour of a region which possibly contains a circle or a partial circle
 # in format of a list of [x_pos, y_pos]
 @nb.jit(nopython=True)
 def histogram_based_circle_detection(img, contour, min_dist, max_dist, step, thresh):
@@ -26,7 +26,6 @@ def histogram_based_circle_detection(img, contour, min_dist, max_dist, step, thr
     for i in range(height):
         for j in range(width):
             ds = np.sqrt(np.sum(np.square(np.array([j,i]) - contour), axis=-1))
-            # print(ds.shape)
             hist, bin_edges = np.histogram(ds, bins=int((max_dist-min_dist)/step), range=(min_dist, max_dist))
             max_perimeter = np.max(hist)
             # accumulator_map[i,j] = max_perimeter
@@ -104,7 +103,7 @@ def detect_circle(seg, mask):
 
 def get_circle_mask(img_name):
     if not jpype.isJVMStarted():
-        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./algo/skin_lesion.jar'])
+        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./algo/Merging.jar'])
     img_dir = "./data/ISIC2016_test/Test_Data"
     resized_dir = "./data/ISIC2016_test/resized"
     corner_mask_dir = "./data/ISIC2016_test/dark_corner_artifact/masks"
@@ -160,6 +159,5 @@ def get_circle_mask(img_name):
 
 if __name__=='__main__':
 
-    ## lesion part of "ISIC_0006326.jpg" is too circular..
     img_name = "ISIC_0001242.jpg"
     get_circle_mask(img_name)

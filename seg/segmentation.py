@@ -16,11 +16,11 @@ from seg.classifier import lesion_prob, max_between_variance_channel
 from skimage.segmentation import find_boundaries, mark_boundaries
 from skimage.morphology import label
 
-
+# SLED_SS segmentation.
 def SLED_single_scale(img, mask, img_name, slic_nsegments, args):
     args.slic_nsegments = slic_nsegments
     if not jpype.isJVMStarted():
-        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./SLED/algo/Merging.jar'])
+        jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./algo/Merging.jar'])
     mask = mask.astype(bool).astype(int)
     seg_sp = segmentation.slic(img, mask=mask, compactness=args.slic_compatness, n_segments=args.slic_nsegments,
                                start_label=0)
@@ -78,7 +78,7 @@ def SLED_single_scale(img, mask, img_name, slic_nsegments, args):
 
     return score_map, background, variance, img_name
 
-
+# SLED_MS segmentation.
 def SLED_multi_scale(img, mask, img_name, args):
     scoremap_global = np.zeros_like(mask, dtype=float)
     scoremap_list = []

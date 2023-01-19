@@ -4,11 +4,11 @@ from scipy.ndimage.morphology import binary_fill_holes
 from skimage.morphology import label, opening
 import cv2 as cv
 
-# closeness of connected regions against the center of the image
-# method from paper "Automatic segmentation of dermoscopy images using saliency combined with adaptive
-# thresholding based wavelet transform"
+# Closeness of connected regions against the center of the image.
+# Method from paper "Automatic segmentation of dermoscopy images using saliency combined with adaptive
+# thresholding based wavelet transform".
 
-# generate a gaussian kernel, h, w are the height and width of the kernel,
+# Generate a gaussian kernel, h, w are the height and width of the kernel,
 # h_sig, w_sig are \sigma of height and width.
 def gkern(h, w, h_sig, w_sig):
     hx = np.linspace(-(h-1)/2, (h-1)/2, 1)
@@ -19,6 +19,7 @@ def gkern(h, w, h_sig, w_sig):
     kernel = kernel / np.sum(kernel)
     return kernel
 
+# Select the connected component with largest region score.
 def lesion_selection_with_loc(seg, mask):
     height, width = seg.shape
     L = np.maximum(height, width)
@@ -50,6 +51,7 @@ def lesion_selection_with_loc(seg, mask):
     # seg_final = opening(seg_final, selem=disk(8))
     return seg_final
 
+# The darker class C0 is the lesion region. For structural entropy guided segmentation.
 def background_selection_darkest(img, seg, mask):
     img_gray = rgb2gray(img)
     intensity = np.ones(seg.max()+1)*255
