@@ -22,7 +22,7 @@ def SLED_single_scale(img, mask, img_name, slic_nsegments, args):
     if not jpype.isJVMStarted():
         jpype.startJVM(jpype.getDefaultJVMPath(), classpath=['./algo/Merging.jar'])
     mask = mask.astype(bool).astype(int)
-    seg_sp = segmentation.slic(img, mask=mask, compactness=args.slic_compatness, n_segments=args.slic_nsegments,
+    seg_sp = segmentation.slic(img, mask=mask, compactness=args.slic_compactness, n_segments=args.slic_nsegments,
                                start_label=0)
     num_seg = np.amax(seg_sp) + 1
 

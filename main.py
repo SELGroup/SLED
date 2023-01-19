@@ -9,15 +9,17 @@ import numpy as np
 from seg.segmentation import SLED_multi_scale, SLED_single_scale
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--dataset', choices=['PH2', 'ISIC2016_training', 'ISIC2016_test'], default='PH2')
 # superpixel arguments
 parser.add_argument('--superpixel', choices=['slic'], default='slic')
-parser.add_argument('--slic_compatness', default=10)
+parser.add_argument('--slic_compactness', default=10)
 parser.add_argument('--slic_nsegments', default=400)
 # graph construction arguments
 parser.add_argument('--adj_type', choices=['img_knn', 'knn'], default='img_knn')
 parser.add_argument('--self_tuning_k', default=30)
 parser.add_argument('--knn_k', default=50)
 parser.add_argument('--centroid_thresh', default=0.3)
+parser.add_argument('--knn_sigma', default=30)
 # multi scale mechanism arguments
 parser.add_argument('--contamination', default=0.1)
 parser.add_argument('--nsegments_start', default=200)
@@ -155,8 +157,16 @@ def SLED_ISIC2016_test():
         plt.savefig(visualization_path)
         io.imsave(result_path, seg_final)
 
+def SLED():
+    if args.dataset == 'PH2':
+        SLED_PH2()
+    elif args.dataset == 'ISIC2016_training':
+        SLED_ISIC2016_training()
+    elif args.dataset == 'ISIC2016_test':
+        SLED_ISIC2016_test()
 
 if __name__=='__main__':
-    SLED_PH2()
+    SLED()
+    # SLED_PH2()
     # SLED_ISIC2016_training()
     # SLED_ISIC2016_test()
