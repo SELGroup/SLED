@@ -5,6 +5,7 @@ import os, jpype
 
 EPS = 1e-15
 
+# The refinement stage of iteratively refined structural entropy.
 def refinement_SE(adj, y=None):
     adj -= np.diag(np.diag(adj))
     tol = 1e-10
@@ -53,6 +54,7 @@ def refinement_SE(adj, y=None):
         se = np.sum(ses)
     return z
 
+# The merging stage of iteratively refined structural entropy.
 def merging(adj, img_name, sp_scale=None):
     img_name = img_name.split('.')[0]
     if sp_scale == None:

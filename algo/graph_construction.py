@@ -37,6 +37,7 @@ def img_knn_affinity(X, st_k, k, centroids, centroids_thresh, dist_metric="eucli
                 A[j, i] = w
     return A
 
+# A naive knn graph.
 def knn_affinity(X, sigma, k, centroids, centroids_thresh, dist_metric="euclidean"):
     # sigma = 30
     dim = X.shape[0]
