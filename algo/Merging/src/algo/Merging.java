@@ -12,14 +12,14 @@ import java.util.Set;
 public class Merging {
     public static Graph constructGraph(String graphPath) throws Exception {
         Scanner scan = new Scanner(new BufferedReader(new InputStreamReader(new FileInputStream(graphPath), "UTF-8")));
-        int numNodes = Integer.parseInt(scan.nextLine().strip());
+        int numNodes = Integer.parseInt(scan.nextLine().trim());
         Graph g = new Graph(numNodes);
         double sumDegrees = g.getSumDegrees();
         HashMap<PairNode, Double> weights = g.getWeights();
         HashMap<Integer, Set<Integer>> connection = g.getConnection();
         double[] nodeDegree = g.getNodeDegree();
         while(scan.hasNextLine()) {
-            String[] line = scan.nextLine().strip().split("\t");
+            String[] line = scan.nextLine().trim().split("\t");
             if(line.length < 3)
                 continue;
             int start = Integer.parseInt(line[0]);
