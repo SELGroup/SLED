@@ -17,7 +17,7 @@ example: ```python main.py --dataset ISIC2016```
 ```
 optional arguments:
   -h                    show this help message and exit
-  --dataset DATASET     name of dataset (default: PH2)
+  --dataset DATASET     name of dataset (default: ISIC2016)
   --slic_nsegments      SLIC_NSEGMENTS
                         number of superpixels in SLIC segmentation (default: 400)
   --slic_compactness SLIC_COMPACTNESS    
